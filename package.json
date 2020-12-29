@@ -2,6 +2,8 @@
 	"name": "phpunit-watcher",
 	"displayName": "PHPUnit Watcher",
 	"description": "Run PHPUnit on file changes",
+	"publisher": "HerisIT",
+	"repository": "https://github.com/Heris-IT/vscode-phpunit-watcher",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.52.0"
