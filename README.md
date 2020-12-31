@@ -1,6 +1,8 @@
-# phpunit-watcher README
+# PHPUnit Watcher
 
 PHPUnit watcher extension for VS Code
+
+<img src=https://raw.githubusercontent.com/Heris-IT/vscode-phpunit-watcher/main/images/demo.gif width=420 height=136>
 
 ## Features
 
@@ -21,8 +23,13 @@ This extension contributes the following settings:
 -   `phpunit-watcher.php`: PHP command, default: "php"
 -   `phpunit-watcher.phpunitArguments`: PHPUnit arguments, default: "tests"
 -   `phpunit-watcher.useComposer`: Try to use phpunit from composer, default: true
+-   `phpunit-watcher.triggerLanguageIds`: Language Ids that trigger a rerun of the unit tests on save, seperate by commas. Example options: php, html, json. Default: "php"
 
 ## Release Notes
+
+### 1.0.1
+
+Make Language Ids that trigger a rerun of the tests configurable.
 
 ### 1.0.0
 

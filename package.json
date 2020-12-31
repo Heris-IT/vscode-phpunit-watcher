@@ -4,7 +4,7 @@
 	"description": "Run PHPUnit on file changes",
 	"publisher": "HerisIT",
 	"repository": "https://github.com/Heris-IT/vscode-phpunit-watcher",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -17,6 +17,7 @@
 		"workspaceContains:phpunit.xml"
 	],
 	"main": "./dist/extension.js",
+	"icon": "images/phpunit-watcher.png",
 	"contributes": {
 		"commands": [
 			{
@@ -55,6 +56,12 @@
 					"description": "Try to use PHPUnit from Composer",
 					"type": "boolean",
 					"default": true,
+					"scope": "resource"
+				},
+				"phpunit-watcher.triggerLanguageIds": {
+					"description": "Language Ids that trigger a rerun of the unit tests on save, seperate by commas. Example options: php, html, json",
+					"type": "string",
+					"default": "php",
 					"scope": "resource"
 				}
 			}
