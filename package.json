@@ -4,7 +4,7 @@
 	"description": "Run PHPUnit on file changes",
 	"publisher": "HerisIT",
 	"repository": "https://github.com/Heris-IT/vscode-phpunit-watcher",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -18,6 +18,7 @@
 	],
 	"main": "./dist/extension.js",
 	"icon": "images/phpunit-watcher.png",
+	"license": "GPL-3.0-only",
 	"contributes": {
 		"commands": [
 			{

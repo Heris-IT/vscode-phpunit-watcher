@@ -14,10 +14,40 @@ export type Results = {
     success: boolean,
 };
 
+export enum Version {
+    v10x,
+    v9x,
+    v8x,
+    other
+}
+
+export const getPUPUnitVersion = (data: string): Version => {
+    const regex = new RegExp(/PHPUnit (?<major>\d+).(?<minor>\d+).(?<maintenance>\d+) /, 'g');
+    const results = regex.exec(data)?.groups ?? {};
+    const { major, minor, maintenance } = results;
+    if (major === '10') {
+        return Version.v10x;
+    } else if (major === '9') {
+        return Version.v9x;
+    } else if (major === '8') {
+        return Version.v8x;
+    } else {
+        return Version.other;
+    }
+};
+
+export const getRegexForVersion = (version: Version): RegExp => {
+    if (version === Version.v8x) {
+        return new RegExp(/(?<okTasks>\d+) \/ (?<totalTasks>\d+) \((?<percentage>\d\d?\d?)\%\).*\r?\n\r?\nTime: (?<time>\d+ ms), Memory: (?<memory>\d+(?:.\d+)? (?:M|G)B)\r?\n\r?\n(?:(?<successStatus>OK) \((?<successTests>\d+) tests, (?<successAssertions>\d+) assertions\)|(?:.*\r?\n)*(?<failStatus>FAIL)URES!\r?\nTests: (?<failTests>\d+), Assertions: (?<failAssertions>\d+), Failures: (?<failures>\d+)|(?:.*\r?\n)*(?<errorStatus>ERROR)S!\r?\nTests: (?<errorTests>\d+), Assertions: (?<errorAssertions>\d+), Errors: (?<errors>\d+))/, 'gm');
+    }
+    return new RegExp(/(?<okTasks>\d+) \/ (?<totalTasks>\d+) \((?<percentage>\d\d?\d?)\%\).*\r?\n\r?\nTime: (?<time>\d{2}:\d{2}.\d{3}), Memory: (?<memory>\d+(?:.\d+)? (?:M|G)B)\r?\n\r?\n(?:(?<successStatus>OK) \((?<successTests>\d+) tests, (?<successAssertions>\d+) assertions\)|(?:.*\r?\n)*(?<failStatus>FAIL)URES!\r?\nTests: (?<failTests>\d+), Assertions: (?<failAssertions>\d+), Failures: (?<failures>\d+)|(?:.*\r?\n)*(?<errorStatus>ERROR)S!\r?\nTests: (?<errorTests>\d+), Assertions: (?<errorAssertions>\d+), Errors: (?<errors>\d+))/, 'gm');
+};
+
 export const parseResults = (results: string): Results => {
-    const regex = new RegExp(/(\d+) \/ (\d+) \((\d\d?\d?)\%\).*\r?\n\r?\nTime: (\d{2}:\d{2}.\d{3}), Memory: (\d+(?:.\d+)? (?:M|G)B)\r?\n\r?\n(?:(OK) \((\d+) tests, (\d+) assertions\)|(?:.*\r?\n)*(FAIL)URES!\r?\nTests: (\d+), Assertions: (\d+), Failures: (\d+)|(?:.*\r?\n)*(ERROR)S!\r?\nTests: (\d+), Assertions: (\d+), Errors: (\d+))/, 'gm');
+    const version = getPUPUnitVersion(results);
+    const regex = getRegexForVersion(version);
     const a = regex.exec(results);
-    const [, okTasks, totalTasks, percentage, time, memory, successStatus, successTests, successAssertions, failStatus, failTests, failAssertions, failures, errorStatus, errorTests, errorAssertions, errors] = a ?? [];
+    const { okTasks, totalTasks, percentage, time, memory, successStatus, successTests, successAssertions, failStatus, failTests, failAssertions, failures, errorStatus, errorTests, errorAssertions, errors } = a?.groups ?? {};
     const result: Results = {
         okTasks: +okTasks,
         totalTasks: +totalTasks,
@@ -31,7 +61,6 @@ export const parseResults = (results: string): Results => {
         errors: +(errors ?? 0),
         success: successStatus === 'OK'
     };
-    console.log(result);
     return result;
 };
 

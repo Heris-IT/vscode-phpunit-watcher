@@ -12,7 +12,7 @@ PHPUnit watcher extension for VS Code
 ## Requirements
 
 -   php needs to be in the PATH variable.
--   PHPUnit
+-   PHPUnit (Version 8+) This must be either available globally and in the PATH variable or installed in the project via composer
 
 ## Extension Settings
 
@@ -26,6 +26,10 @@ This extension contributes the following settings:
 -   `phpunit-watcher.triggerLanguageIds`: Language Ids that trigger a rerun of the unit tests on save, seperate by commas. Example options: php, html, json. Default: "php"
 
 ## Release Notes
+
+### 1.1.0
+
+Added support for PHPUnit 8
 
 ### 1.0.1
 
