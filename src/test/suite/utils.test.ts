@@ -83,6 +83,29 @@ OK (9 tests, 15 assertions)`;
         });
     });
 
+    test('parseResults OK PHPUnit 9 - 1 test', () => {
+        const data = `PHPUnit 9.5.0 by Sebastian Bergmann and contributors.
+
+.........                                                           1 / 1 (100%)
+
+Time: 00:00.018, Memory: 4.00 MB
+
+OK (1 test, 1 assertion)`;
+        assert.deepStrictEqual(parseResults(data), {
+            assertions: 1,
+            errors: 0,
+            failures: 0,
+            memory: "4.00 MB",
+            okTasks: 1,
+            percentage: 100,
+            status: "OK",
+            success: true,
+            tests: 1,
+            time: "00:00.018",
+            totalTasks: 1,
+        });
+    });
+
     test('parseResults FAIL PHPUnit 9', () => {
         const data = `PHPUnit 9.5.0 by Sebastian Bergmann and contributors.
 
@@ -139,6 +162,29 @@ OK (9 tests, 15 assertions)`;
             tests: 9,
             time: "44 ms",
             totalTasks: 9,
+        });
+    });
+
+    test('parseResults OK PHPUnit 8 - 1 test', () => {
+        const data = `PHPUnit 8.5.14 by Sebastian Bergmann and contributors.
+
+.........                                                           1 / 1 (100%)
+
+Time: 44 ms, Memory: 4.00 MB
+
+OK (1 test, 1 assertion)`;
+        assert.deepStrictEqual(parseResults(data), {
+            assertions: 1,
+            errors: 0,
+            failures: 0,
+            memory: "4.00 MB",
+            okTasks: 1,
+            percentage: 100,
+            status: "OK",
+            success: true,
+            tests: 1,
+            time: "44 ms",
+            totalTasks: 1,
         });
     });
 
